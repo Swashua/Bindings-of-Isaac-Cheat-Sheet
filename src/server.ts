@@ -13,12 +13,14 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 // API: Get all items with optional filters
 app.get('/api/items', (req, res) => {
   try {
-    const { search, type, quality, unlocked, sort, order } = req.query;
+    const { search, type, quality, unlocked, dlc, color, sort, order } = req.query;
     const items = queryItems({
       search: search ? String(search) : undefined,
       type: type ? String(type) : undefined,
       quality: quality ? String(quality) : undefined,
       unlocked: unlocked ? String(unlocked) : undefined,
+      dlc: dlc ? String(dlc) : undefined,
+      color: color ? String(color) : undefined,
       sort: (sort === 'name' || sort === 'quality' || sort === 'id' || sort === 'color') ? sort : 'color',
       order: order === 'desc' ? 'desc' : 'asc',
     });

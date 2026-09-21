@@ -13,6 +13,8 @@ export interface ItemFilterOptions {
   type?: string;
   quality?: string;
   unlocked?: string; // 'default' | 'unlockable' | 'all'
+  dlc?: string; // 'rebirth' | 'afterbirth' | 'afterbirthplus' | 'repentance' | 'all'
+  color?: string; // 'Red' | 'Orange' | 'Yellow' | 'Green' | 'Blue' | 'Purple' | 'Brown' | 'Mono' | 'all'
   sort?: 'color' | 'id' | 'name' | 'quality';
   order?: 'asc' | 'desc';
 }
@@ -46,6 +48,28 @@ export function queryItems(options: ItemFilterOptions = {}): ItemData[] {
     query += ' AND is_unlocked_by_default = 1';
   } else if (options.unlocked === 'unlockable') {
     query += ' AND is_unlocked_by_default = 0';
+  }
+
+  if (options.dlc && options.dlc.toLowerCase() !== 'all') {
+    const dlcKey = options.dlc.toLowerCase();
+    if (dlcKey === 'rebirth') {
+      query += ' AND game_id <= 346';
+    } else if (dlcKey === 'afterbirth') {
+      query += ' AND game_id > 346 AND game_id <= 441';
+    } else if (dlcKey === 'afterbirthplus' || dlcKey === 'afterbirth+') {
+      query += ' AND game_id > 441 AND game_id <= 552';
+    } else if (dlcKey === 'repentance') {
+      query += ' AND game_id > 552';
+    }
+  }
+
+  if (options.color && options.color.toLowerCase() !== 'all') {
+    if (options.color.toLowerCase() === 'mono') {
+      query += " AND color_group IN ('White', 'Gray', 'Black')";
+    } else {
+      query += ' AND LOWER(color_group) = LOWER(?)';
+      params.push(options.color);
+    }
   }
 
   // Sort
