@@ -99,18 +99,19 @@
 
   async function loadData() {
     try {
-      const res = await fetch('/api/items?sort=color');
+      const res = await fetch('data/items.json');
       if (res.ok) {
         const json = await res.json();
-        allItems = json.data || [];
+        allItems = Array.isArray(json) ? json : (json.data || []);
       } else {
-        throw new Error('API failed');
+        throw new Error('Static items fetch failed');
       }
     } catch (err) {
-      console.warn('Falling back to static data/items.json', err);
+      console.warn('Trying /api/items fallback', err);
       try {
-        const res = await fetch('data/items.json');
-        allItems = await res.json();
+        const res = await fetch('/api/items?sort=color');
+        const json = await res.json();
+        allItems = Array.isArray(json) ? json : (json.data || []);
       } catch (e) {
         console.error('Failed to load items:', e);
       }

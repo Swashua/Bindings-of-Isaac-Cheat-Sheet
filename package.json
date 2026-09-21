@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc --noEmit",
     "start": "tsx src/server.ts",
     "dev": "tsx watch src/server.ts",
     "scrape": "tsx src/scraper.ts"

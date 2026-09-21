@@ -3,6 +3,7 @@ import * as cheerio from 'cheerio';
 import * as fs from 'fs';
 import * as path from 'path';
 import { DatabaseSync } from 'node:sqlite';
+import { analyzeImageColor } from './compute_colors';
 
 export interface ItemData {
   id: number;
@@ -384,7 +385,6 @@ async function run() {
   await downloadImages(items, imagesDir);
 
   // 2. Compute dominant colors and color order
-  const { analyzeImageColor } = await import('./compute_colors');
   for (const item of items) {
     const fileName = `${item.type.toLowerCase()}_${item.game_id}.png`;
     const filePath = path.join(imagesDir, fileName);
