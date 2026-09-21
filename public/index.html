@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>The Binding of Isaac: Repentance Item Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/webp" href="/favicon.webp">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top App Bar -->
+  <header class="top-nav">
+    <div class="top-nav-main">
+      <a href="/" class="nav-brand" id="brandHomeLink" title="Return to home page">
+        <span class="game-badge">REPENTANCE</span>
+        <h1 class="brand-title">The Binding of Isaac</h1>
+      </a>
+
+      <!-- Search input -->
+      <div class="search-container">
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search 719 items, effects, IDs, unlocks... (Press '/')" autocomplete="off">
+        <kbd class="search-kbd">/</kbd>
+        <button id="clearSearchBtn" class="search-clear" style="display: none;" title="Clear search">&times;</button>
+      </div>
+
+      <div class="header-actions">
+        <button id="quickResetBtn" class="quick-reset-btn" style="display: none;" title="Reset all active filters">
+          <span>Clear Filters</span>
+          <span class="reset-icon">&times;</span>
+        </button>
+        <div class="counter-badge" id="resultsCount">719 items</div>
+      </div>
+    </div>
+
+    <!-- Compact quick filters -->
+    <div class="filter-bar">
+      <div class="filter-section">
+        <span class="filter-lbl">Type:</span>
+        <div class="filter-segmented">
+          <button class="filter-btn active" data-type="all">All</button>
+          <button class="filter-btn" data-type="Passive">Passive</button>
+          <button class="filter-btn" data-type="Activated">Active</button>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <span class="filter-lbl">Quality:</span>
+        <div class="filter-segmented quality-segmented">
+          <button class="filter-btn q-btn q0" data-quality="0" title="Quality 0 (Situational)">Q0</button>
+          <button class="filter-btn q-btn q1" data-quality="1" title="Quality 1 (Decent)">Q1</button>
+          <button class="filter-btn q-btn q2" data-quality="2" title="Quality 2 (Good)">Q2</button>
+          <button class="filter-btn q-btn q3" data-quality="3" title="Quality 3 (Great)">Q3</button>
+          <button class="filter-btn q-btn q4" data-quality="4" title="Quality 4 (God Tier)">Q4</button>
+          <button class="filter-btn active" data-quality="all">All</button>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <span class="filter-lbl">Unlock:</span>
+        <div class="filter-segmented">
+          <button class="filter-btn active" data-unlock="all">All</button>
+          <button class="filter-btn unlock-btn" data-unlock="unlockable">Needs Unlock</button>
+          <button class="filter-btn" data-unlock="default">Default</button>
+        </div>
+      </div>
+
+      <div class="filter-section color-section">
+        <span class="filter-lbl">Color:</span>
+        <div class="filter-segmented color-segmented">
+          <button class="filter-btn active" data-color="all">All</button>
+          <button class="filter-btn" data-color="Red"><span class="color-dot" style="background: #ef4444;"></span>Red</button>
+          <button class="filter-btn" data-color="Orange"><span class="color-dot" style="background: #f97316;"></span>Orange</button>
+          <button class="filter-btn" data-color="Yellow"><span class="color-dot" style="background: #eab308;"></span>Yellow</button>
+          <button class="filter-btn" data-color="Green"><span class="color-dot" style="background: #22c55e;"></span>Green</button>
+          <button class="filter-btn" data-color="Blue"><span class="color-dot" style="background: #3b82f6;"></span>Blue</button>
+          <button class="filter-btn" data-color="Purple"><span class="color-dot" style="background: #a855f7;"></span>Purple</button>
+          <button class="filter-btn" data-color="Brown"><span class="color-dot" style="background: #92400e;"></span>Brown</button>
+          <button class="filter-btn" data-color="Mono"><span class="color-dot" style="background: #9ca3af;"></span>Mono</button>
+        </div>
+      </div>
+
+      <div class="filter-section sort-section">
+        <label for="sortSelect" class="filter-lbl">Sort:</label>
+        <div class="select-wrapper">
+          <select id="sortSelect" class="sort-dropdown">
+            <option value="color_asc" selected>Color Order (Rainbow)</option>
+            <option value="id_asc">Item ID &uarr;</option>
+            <option value="id_desc">Item ID &darr;</option>
+            <option value="quality_desc">Quality &darr;</option>
+            <option value="quality_asc">Quality &uarr;</option>
+            <option value="name_asc">Name A-Z</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-section dlc-section">
+        <span class="filter-lbl">DLC:</span>
+        <div class="filter-segmented dlc-segmented">
+          <button class="filter-btn active" data-dlc="all">All</button>
+          <button class="filter-btn dlc-btn dlc-rebirth" data-dlc="rebirth">Rebirth</button>
+          <button class="filter-btn dlc-btn dlc-afterbirth" data-dlc="afterbirth">Afterbirth</button>
+          <button class="filter-btn dlc-btn dlc-afterbirthplus" data-dlc="afterbirthplus">Afterbirth+</button>
+          <button class="filter-btn dlc-btn dlc-repentance" data-dlc="repentance">Repentance</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View with Left Sidebar & Pure Image Grid -->
+  <div class="app-layout">
+    <!-- Left-Side Description Drawer/Panel -->
+    <aside id="sidePanel" class="side-panel">
+      <!-- Placeholder when nothing is selected -->
+      <div id="sidePlaceholder" class="side-placeholder">
+        <div class="altar-sigil">
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3v18"></path>
+            <path d="M3 12h18"></path>
+            <circle cx="12" cy="12" r="4"></circle>
+          </svg>
+        </div>
+        <h3 class="placeholder-title">Basement Archives</h3>
+        <p class="placeholder-quote">"He who has ears to hear, let him hear."</p>
+        <p class="placeholder-hint">Select any relic from the archives to examine its effect and unlock prophecies.</p>
+        <div class="placeholder-tip">
+          <span>Controls:</span> <kbd>/</kbd> search &bull; <kbd>&larr;</kbd> <kbd>&rarr;</kbd> <kbd>&uarr;</kbd> <kbd>&darr;</kbd> navigate
+        </div>
+      </div>
+
+      <!-- Detail Showcase when an item is clicked -->
+      <div id="sideContent" class="side-content" style="display: none;">
+        <div class="panel-header">
+          <button id="closeSideBtn" class="panel-close-btn" title="Close details">&times;</button>
+          <div id="panelIconWrap" class="panel-icon-wrap">
+            <img id="panelIcon" src="" alt="" class="panel-icon pixelated">
+          </div>
+          <div class="panel-title-area">
+            <div class="panel-tags">
+              <button id="panelId" class="tag id-tag copyable" title="Click to copy item details">#001</button>
+              <span id="panelType" class="tag type-tag">Passive</span>
+              <span id="panelQuality" class="tag quality-tag q4">Quality 4</span>
+              <span id="panelDlcTag" class="tag dlc-tag" style="display: none;"></span>
+            </div>
+            <h2 id="panelName" class="panel-item-name">The Sad Onion</h2>
+            <div id="panelQuote" class="panel-item-quote">"Tears up"</div>
+            <div id="panelDlcNotice" class="panel-dlc-notice" style="display: none;">
+              <span class="dlc-indicator-dot"></span>
+              <span id="panelDlcText"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thematic Divider -->
+        <div class="panel-divider"></div>
+
+        <!-- Organic Effect Narrative (No generic card box) -->
+        <div class="panel-section effect-section">
+          <div class="section-label">
+            <span class="label-glyph">✦</span>
+            <span>Effect</span>
+          </div>
+          <p id="panelDesc" class="panel-desc-text"></p>
+        </div>
+
+        <!-- Inscribed Covenant Unlock Section -->
+        <div id="panelUnlockBlock" class="panel-section unlock-section">
+          <div class="section-label unlock-label">
+            <span class="label-glyph">⚔</span>
+            <span>How to Unlock</span>
+          </div>
+          <p id="panelUnlock" class="panel-unlock-text"></p>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Right Side: Pure Image Grid -->
+    <main class="grid-container">
+      <div id="itemsGrid" class="pure-image-grid">
+        <!-- Pure images inserted here without boxes -->
+      </div>
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
+        <p>No collectibles match your search or filter.</p>
+        <button id="emptyResetBtn" class="reset-link">Reset all filters</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Custom Floating Tooltip for mouse hover -->
+  <div id="itemTooltip" class="item-tooltip" style="display: none;"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
